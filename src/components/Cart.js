@@ -1,5 +1,5 @@
 
-function Cart({on_close, items = []}) {
+function Cart({on_close, on_remove, items = []}) {
     return (
         <div className="overlay">
         <div className="cart_block">
@@ -15,7 +15,7 @@ function Cart({on_close, items = []}) {
                             <p className="mb-5">{obj.title}</p>
                             <b>{obj.price} руб.</b>
                         </div>
-                        <img className="remove_btn" src="/img/btn_remove.svg" alt="Remove" />
+                        <img onClick={() => on_remove(obj.id)} className="remove_btn" src="/img/btn_remove.svg" alt="Remove" />
                     </div>
                 ))
             }
