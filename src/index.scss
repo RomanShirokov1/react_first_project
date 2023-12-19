@@ -34,6 +34,49 @@ header {
   }
 }
 
+.cart_empty {
+  text-align: center;
+
+  p {
+    width: 280px;
+    line-height: 24px;
+  }
+
+  .back_button {
+    width: 245px;
+    margin-top: 20px;
+    height: 55px;
+    background: #9DD558;
+    border-radius: 18px;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .1s ease-in-out;
+
+    &:hover {
+      background: lighten(#9DD558, 5%);
+
+      img {
+        transform: rotate(180deg) translateX(3px);
+      }
+    }
+
+    &:active {
+      background: darken(#9DD558, 5%);
+    }
+
+    img {
+      position: relative;
+      top: 1px;
+      transform: rotate(180deg);
+      margin-right: 15px;
+      transition: transform .15s ease-in-out;
+    }
+  }
+}
+
 .search_block {
   border: 1px solid #F3F3F3;
   border-radius: 10px;
