@@ -13,7 +13,7 @@ function Cart({on_close, on_remove, items = []}) {
                     <div>
                         <div className="items">
                         {items.map(obj => (
-                            <div className="cart_item d-flex align-center mb-20">
+                            <div key={obj.id} className="cart_item d-flex align-center mb-20">
                                 <div style={{ backgroundImage: `url(${obj.image_url})` }} className="cart_item_img"></div>
                                 <div className="mr-20 flex">
                                     <p className="mb-5">{obj.title}</p>

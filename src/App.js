@@ -12,21 +12,36 @@ function App() {
   const [favItems, setFavItems] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState('');
   const [cartOpened, setCartOpened] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    axios.get("https://657973fa1acd268f9af90a82.mockapi.io/items").then(response => {
-      setItems(response.data)
-    });
-    axios.get("https://657973fa1acd268f9af90a82.mockapi.io/cart").then(response => {
-      setCartItems(response.data)
-    });
-    axios.get("https://657d6f08853beeefdb9abd33.mockapi.io/favorite").then(response => {
-      setFavItems(response.data)
-    });
+    async function fetchData() {
+      const cartResponse = await axios.get("https://657973fa1acd268f9af90a82.mockapi.io/cart");
+      const favoritesResponse = await axios.get("https://657d6f08853beeefdb9abd33.mockapi.io/favorite");
+      const itemsResponse = await axios.get("https://657973fa1acd268f9af90a82.mockapi.io/items");
+
+      setIsLoading(false);
+
+      setCartItems(cartResponse.data);
+      setFavItems(favoritesResponse.data);
+      setItems(itemsResponse.data);
+
+    }
+
+    fetchData();
   }, []);
 
   const onAddToCart = (obj) => {
-    axios.post("https://657973fa1acd268f9af90a82.mockapi.io/cart", obj).then(res => setCartItems(prev => [...prev, res.data]));
+    try {
+      if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+        axios.delete(`https://657973fa1acd268f9af90a82.mockapi.io/cart/${obj.id}`);
+        setCartItems((prev) => prev.filter(item => Number(item.id) !== Number(obj.id)));
+      } else {
+        axios.post("https://657973fa1acd268f9af90a82.mockapi.io/cart", obj).then(res => setCartItems(prev => [...prev, res.data]));
+      }
+    } catch (error) {
+      alert('Ошибка при запросе данных ;(');
+    }
   }
 
   const onRemoveItem = (id) => {
@@ -45,13 +60,11 @@ function App() {
       } else {
         const { data } = await axios.post("https://657d6f08853beeefdb9abd33.mockapi.io/favorite", obj);
         setFavItems((prev) => [...prev, data]);
-        console.log(obj)
       }
     } catch(error) {
       alert('Не удалось добавить в фавориты')
     }
   }
-  console.log(favItems)
   return (
     <div className="wrapper clear">
       {cartOpened && <Cart items={cartItems} on_close={() => setCartOpened(false)} on_remove={onRemoveItem} />}
@@ -61,11 +74,13 @@ function App() {
         <Route path="/" element={
           <Home
             items={items}
+            cartItems={cartItems}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
             onSearch={onSearch}
             onFavorite={onFavorite}
             onAddToCart={onAddToCart}
+            isLoading={isLoading}
           />
         }
           exact
