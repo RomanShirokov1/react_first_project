@@ -5,7 +5,7 @@ import AppContext from '../../context';
 
 function Card({ id, onFavorite, on_click_plus, title, image_url, price, favorited = false, loading = false }) {
 
-    const {isItemAdded} = React.useContext(AppContext);
+    const { isItemAdded } = React.useContext(AppContext);
     const [isFav, setIsFav] = React.useState(favorited);
 
     const onClickPlus = () => {
@@ -35,7 +35,10 @@ function Card({ id, onFavorite, on_click_plus, title, image_url, price, favorite
                 </ContentLoader> :
                     <>
                         <div className={styles.favorite} onClick={onClickFav}>
-                            <img src={isFav ? "/img/btn_fav.svg" : "/img/btn_nonfav.svg"} alt="Fav" />
+                            {onFavorite && <img
+                                src={isFav ? "/img/btn_fav.svg" : "/img/btn_nonfav.svg"}
+                                alt="Fav"
+                            />}
                         </div>
                         <img width="100%" height={135} src={image_url} alt="" />
                         <h5>{title}</h5>
@@ -44,7 +47,12 @@ function Card({ id, onFavorite, on_click_plus, title, image_url, price, favorite
                                 <span>Цена:</span>
                                 <b>{price} р.</b>
                             </div>
-                            <img className={styles.plus} onClick={onClickPlus} src={isItemAdded(id) ? "/img/btn_checked.svg" : "/img/btn_plus.svg"} alt="Plus" />
+                            {on_click_plus && <img
+                                className={styles.plus}
+                                onClick={onClickPlus}
+                                src={isItemAdded(id) ? "/img/btn_checked.svg" : "/img/btn_plus.svg"}
+                                alt="Plus"
+                            />}
                         </div>
                     </>
             }

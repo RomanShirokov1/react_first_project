@@ -1,12 +1,15 @@
-import AppContext from "../context";
-import Info from "./Info";
 import React from 'react';
 import axios from "axios";
 
+import Info from "../Info";
+import { useCart } from "../../hooks/useCart";
+
+import styles from './Cart.module.scss';
+
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Cart({ on_close, on_remove, items = [] }) {
-    const { cartItems, setCartItems } = React.useContext(AppContext);
+function Cart({ on_close, on_remove, items = [], opened }) {
+    const { cartItems, setCartItems, total_price } = useCart();
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
     const [orderId, setOrderId] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false)
@@ -32,8 +35,8 @@ function Cart({ on_close, on_remove, items = [] }) {
     }
 
     return (
-        <div className="overlay">
-            <div className="cart_block">
+        <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+            <div className={styles.cart_block}>
                 <h2 className="d-flex justify-between mb-30">
                     Корзина
                     <img onClick={on_close} className="remove_btn cu-p" src="/img/btn_remove.svg" alt="Close" />
@@ -59,12 +62,12 @@ function Cart({ on_close, on_remove, items = [] }) {
                                     <li>
                                         <span>Итого:</span>
                                         <div></div>
-                                        <b>21 498 руб.</b>
+                                        <b>{total_price} руб.</b>
                                     </li>
                                     <li>
                                         <span>Налог 5%:</span>
                                         <div></div>
-                                        <b>1074 руб.</b>
+                                        <b>{(total_price * 0.05).toFixed(2)} руб.</b>
                                     </li>
                                 </ul>
                                 <button disabled={isLoading} onClick={onClickOrder} className="green_button">Оформить заказ<img src="/img/arrow.svg" alt="Arrow" /></button>

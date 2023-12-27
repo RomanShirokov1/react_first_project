@@ -3,9 +3,11 @@ import axios from 'axios';
 import Header from './components/Header';
 import Cart from './components/Cart';
 import { Route, Routes } from 'react-router-dom';
+import AppContext from './context';
+
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
-import AppContext from './context';
+import Orders from './pages/Orders';
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -69,14 +71,29 @@ function App() {
     }
   }
 
-  const isItemAdded =  (id) => {
+  const isItemAdded = (id) => {
     return cartItems.some((obj) => Number(obj.id) === Number(id))
   }
 
   return (
-    <AppContext.Provider value={ {items, cartItems, favItems, isItemAdded, onFavorite, setCartOpened, setCartItems} }>
+    <AppContext.Provider value={{
+      items,
+      cartItems,
+      favItems,
+      isItemAdded,
+      onFavorite,
+      onAddToCart,
+      setCartOpened,
+      setCartItems
+    }}>
       <div className="wrapper clear">
-        {cartOpened && <Cart items={cartItems} on_close={() => setCartOpened(false)} on_remove={onRemoveItem} />}
+        <Cart
+          items={cartItems}
+          on_close={() => setCartOpened(false)}
+          on_remove={onRemoveItem}
+          opened={cartOpened}
+        />
+        
         <Header on_click_cart={() => setCartOpened(true)} />
 
         <Routes>
@@ -96,7 +113,13 @@ function App() {
           />
 
           <Route path="/favorites" element={
-            <Favorites/>
+            <Favorites />
+          }
+            exact
+          />
+
+          <Route path="/orders" element={
+            <Orders />
           }
             exact
           />
