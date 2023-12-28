@@ -39,7 +39,7 @@ function Cart({ on_close, on_remove, items = [], opened }) {
             <div className={styles.cart_block}>
                 <h2 className="d-flex justify-between mb-30">
                     Корзина
-                    <img onClick={on_close} className="remove_btn cu-p" src="/img/btn_remove.svg" alt="Close" />
+                    <img onClick={on_close} className="remove_btn cu-p" src="img/btn_remove.svg" alt="Close" />
                 </h2>
 
                 {
@@ -53,7 +53,7 @@ function Cart({ on_close, on_remove, items = [], opened }) {
                                             <p className="mb-5">{obj.title}</p>
                                             <b>{obj.price} руб.</b>
                                         </div>
-                                        <img onClick={() => on_remove(obj.id)} className="remove_btn" src="/img/btn_remove.svg" alt="Remove" />
+                                        <img onClick={() => on_remove(obj.id)} className="remove_btn" src="img/btn_remove.svg" alt="Remove" />
                                     </div>
                                 ))}
                             </div>
@@ -70,14 +70,14 @@ function Cart({ on_close, on_remove, items = [], opened }) {
                                         <b>{(total_price * 0.05).toFixed(2)} руб.</b>
                                     </li>
                                 </ul>
-                                <button disabled={isLoading} onClick={onClickOrder} className="green_button">Оформить заказ<img src="/img/arrow.svg" alt="Arrow" /></button>
+                                <button disabled={isLoading} onClick={onClickOrder} className="green_button">Оформить заказ<img src="img/arrow.svg" alt="Arrow" /></button>
                             </div>
                         </div>
                     ) : (
                         <Info
                             title={isOrderComplete ? "Заказ оформлен!" : "Корзина пустая"}
                             description={isOrderComplete ? `Ваш заказ номер #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
-                            image={isOrderComplete ? '/img/order.svg' : '/img/empty_cart.svg'}
+                            image={isOrderComplete ? 'img/order.svg' : 'img/empty_cart.svg'}
                         />
                     )
                 }

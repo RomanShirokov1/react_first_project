@@ -119,7 +119,7 @@ function App() {
         <Header on_click_cart={() => setCartOpened(true)} />
 
         <Routes>
-          <Route path="/" element={
+          <Route path="" element={
             <Home
               items={items}
               cartItems={cartItems}
@@ -134,13 +134,13 @@ function App() {
             exact
           />
 
-          <Route path="/favorites" element={
+          <Route path="favorites" element={
             <Favorites />
           }
             exact
           />
 
-          <Route path="/orders" element={
+          <Route path="orders" element={
             <Orders />
           }
             exact
