@@ -1,13 +1,13 @@
 import Card from '../components/Card';
 import React from 'react';
 
-function Home({ items, searchValue, setSearchValue, onSearch, onFavorite, onAddToCart, isLoading }) {
+function Home({ items, searchValue, onSearch, onFavorite, onAddToCart, isLoading }) {
 
     const renderItems = () => {
         const filteredItems = items.filter((item) =>
             item.title.toLowerCase().includes(searchValue.toLowerCase()),
         );
-        return (isLoading ? [...Array(12)] : filteredItems).map((item, index) => (
+        return (isLoading ? [...Array(10)] : filteredItems).map((item, index) => (
             <Card
                 key={index}
                 on_click_plus={(obj) => onAddToCart(obj)}

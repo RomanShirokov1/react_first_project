@@ -3,17 +3,18 @@ import React from 'react';
 import ContentLoader from "react-content-loader";
 import AppContext from '../../context';
 
-function Card({ id, onFavorite, on_click_plus, title, image_url, price, favorited = false, loading = false }) {
+function Card({ id, onFavorite, on_click_plus, title, image_url, price, favorited = false, loading = false }) { 
 
-    const { isItemAdded } = React.useContext(AppContext);
+    const { isItemAdded } = React.useContext(AppContext); 
     const [isFav, setIsFav] = React.useState(favorited);
+    const obj = { id, parent_id: id, title, image_url, price };
 
     const onClickPlus = () => {
-        on_click_plus({ id, title, image_url, price });
+        on_click_plus(obj);
     }
 
     const onClickFav = () => {
-        onFavorite({ id, title, image_url, price });
+        onFavorite(obj);
         setIsFav(!isFav);
     }
 
@@ -36,7 +37,7 @@ function Card({ id, onFavorite, on_click_plus, title, image_url, price, favorite
                     <>
                         <div className={styles.favorite} onClick={onClickFav}>
                             {onFavorite && <img
-                                src={isFav ? "/img/btn_fav.svg" : "/img/btn_nonfav.svg"}
+                                src={isFav ? "/img/btn_fav.svg" : "/img/btn_nonfav.svg"} 
                                 alt="Fav"
                             />}
                         </div>

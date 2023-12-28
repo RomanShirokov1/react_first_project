@@ -45,7 +45,7 @@ function Cart({ on_close, on_remove, items = [], opened }) {
                 {
                     items.length > 0 ? (
                         <div className="d-flex flex-column flex">
-                            <div className="items">
+                            <div className={`${styles.items} flex`}>
                                 {items.map(obj => (
                                     <div key={obj.id} className="cart_item d-flex align-center mb-20">
                                         <div style={{ backgroundImage: `url(${obj.image_url})` }} className="cart_item_img"></div>
